@@ -7,7 +7,7 @@ SUBJECT=default
 if [[ ! -f "${CERTIFICATE_PATH}" ]]; then
     openssl req \
         -x509 \
-        -newkey rsa:4096 \
+        -newkey rsa:2048 \
         -nodes \
         -sha256 \
         -keyout "${PRIVATEKEY_PATH}" \
