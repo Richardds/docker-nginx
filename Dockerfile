@@ -19,3 +19,6 @@ COPY ./config/nginx.conf /etc/nginx/nginx.conf
 
 # Default nginx server
 COPY ./config/default.conf /etc/nginx/conf.d/default.conf
+
+# Server configuration snippets
+COPY ./config/security_headers.conf /etc/nginx/security_headers
