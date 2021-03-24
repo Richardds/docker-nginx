@@ -22,4 +22,4 @@ COPY ./config/default.conf /etc/nginx/conf.d/default.conf
 
 # Server configuration snippets
 RUN mkdir -p /etc/nginx/snippets
-COPY ./config/security_headers.conf /etc/nginx/snippets/security_headers.conf
+COPY ./config/snippets/security_headers.conf /etc/nginx/snippets/security_headers.conf
