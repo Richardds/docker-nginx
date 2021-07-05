@@ -8,7 +8,7 @@ RUN mkdir -p /etc/nginx/ssl/certs /etc/nginx/ssl/keys && \
     rm -rf /usr/share/nginx/html && \
     rm -f /docker-entrypoint.d/*
 
-RUN apk add --update --no-cache openssl
+RUN apk add --update --no-cache bash openssl
 
 # Script to generate default nginx certificate 
 COPY ./scripts/generate_default_certificate.sh /docker-entrypoint.d/generate_default_certificate.sh
