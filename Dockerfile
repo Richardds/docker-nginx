@@ -1,25 +1,38 @@
-FROM nginx:1.20-alpine
+ARG NGINX_VERSION
 
-WORKDIR /srv
+FROM nginx:${NGINX_VERSION}
 
-RUN mkdir -p /etc/nginx/ssl/certs /etc/nginx/ssl/keys && \
-    chmod 0600 /etc/nginx/ssl/keys && \
-    rm -f /etc/nginx/conf.d/* && \
-    rm -rf /usr/share/nginx/html && \
-    rm -f /docker-entrypoint.d/*
+LABEL maintainer="Richard Boldiš <richard@boldis.dev>"
 
-RUN apk add --update --no-cache bash openssl
+#
+# Packages
+#
 
-# Script to generate default nginx certificate 
-COPY ./scripts/generate_default_certificate.sh /docker-entrypoint.d/generate_default_certificate.sh
-COPY ./scripts/generate_dhparam.sh /docker-entrypoint.d/generate_dhparam.sh
+RUN apk add --update --no-cache openssl
 
-# Main Nginx config
-COPY ./config/nginx.conf /etc/nginx/nginx.conf
+#
+# Configuration
+#
 
-# Default nginx server
-COPY ./config/default.conf /etc/nginx/conf.d/default.conf
+# Replace default nginx configuration
+RUN rm -f /etc/nginx/conf.d/default.conf \
+ && mkdir -p /etc/nginx/ssl/certs /etc/nginx/ssl/keys \
+ && chmod 0700 /etc/nginx/ssl/keys
+COPY --chown=root:root ./config/nginx.conf /etc/nginx/nginx.conf
+COPY --chown=root:root ./config/default.conf /etc/nginx/conf.d/default.conf
 
-# Server configuration snippets
-RUN mkdir -p /etc/nginx/snippets
-COPY ./config/snippets/security_headers.conf /etc/nginx/snippets/security_headers.conf
+# Snippets
+COPY --chown=root:root ./config/snippets /etc/nginx/snippets
+
+#
+# Entrypoints
+#
+
+# Entrypoint for dhparam.pem generation
+COPY --chown=root:root ./entrypoint/10-generate-dhparam.sh /docker-entrypoint.d/10-generate-dhparam.sh
+
+# Entrypoint for fallback self-signed certificate
+COPY --chown=root:root ./entrypoint/20-generate-fallback-certificate.sh /docker-entrypoint.d/20-generate-fallback-certificate.sh
+
+# Add execute permission to entrypoint scripts
+RUN find /docker-entrypoint.d -mindepth 1 -maxdepth 1 -type f -name '*.sh' -exec chmod u+x {} \;

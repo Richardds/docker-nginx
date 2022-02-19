@@ -1,10 +1,16 @@
 #!/bin/sh
 
+#
+# Generates fallback self-signed certificate
+#
+# Richard Boldiš <richard@boldis.dev
+#
+
 CERTIFICATE_PATH=/etc/nginx/ssl/certs/default.pem
 PRIVATEKEY_PATH=/etc/nginx/ssl/keys/default.pem
 SUBJECT=default
 
-if [[ ! -f "${CERTIFICATE_PATH}" ]]; then
+if [ ! -f "${CERTIFICATE_PATH}" ]; then
     openssl req \
         -x509 \
         -newkey rsa:2048 \

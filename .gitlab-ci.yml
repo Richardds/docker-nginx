@@ -1,27 +1,33 @@
 stages:
-  - build
+  - docker
 
 .docker:
-  stage: build
-  image: docker:19.03.12
+  stage: docker
+  image: docker:20.10.12
   services:
-    - docker:19.03.12-dind
+    - docker:20.10.12-dind
   only:
     - tags
   before_script:
     - echo -n "${CI_REGISTRY_PASSWORD}" | docker login --password-stdin -u "${CI_REGISTRY_USER}" "${CI_REGISTRY}"
 
-build:
+.docker_build: &docker_build |
+  docker build --pull --no-cache --rm --build-arg NGINX_VERSION="${NGINX_VERSION}" -f Dockerfile -t "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}" .
+
+.docker_push: &docker_push |
+  docker push "${CI_REGISTRY_IMAGE}"
+
+docker_build:
   extends: .docker
   script:
-    - docker build --pull --no-cache --rm -f Dockerfile -t "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}" .
+    - *docker_build
   except:
     - tags
 
-build_and_push:
+docker_build_and_push:
   extends: .docker
   script:
-    - docker build --pull --no-cache --rm -f Dockerfile -t "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}" .
-    - docker push "${CI_REGISTRY_IMAGE}"
+    - *docker_build
+    - *docker_push
   only:
     - tags
