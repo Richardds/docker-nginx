@@ -15,7 +15,7 @@ stages:
   docker build --pull --no-cache --rm --build-arg NGINX_VERSION="${NGINX_VERSION}" -f Dockerfile -t "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}" .
 
 .docker_push: &docker_push |
-  docker push "${CI_REGISTRY_IMAGE}"
+  docker push "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}"
 
 docker_build:
   extends: .docker
