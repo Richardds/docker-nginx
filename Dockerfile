@@ -8,7 +8,7 @@ LABEL maintainer="Richard Boldiš <richard@boldis.dev>"
 # Packages
 #
 
-RUN apk add --update --no-cache openssl
+RUN apk add --no-cache --update openssl
 
 #
 # Configuration

@@ -1,13 +1,16 @@
-version: '3.8'
+version: '3'
 
 services:
   nginx:
+    image: registry.boldis.dev/infrastructure/docker/nginx:1.20-C
     build:
       dockerfile: Dockerfile
       context: .
       args:
-        - NGINX_VERSION=1.20.2-alpine
+        - NGINX_VERSION=1.20-alpine
     restart: unless-stopped
+    environment:
+      - NGINX=value
     ports:
       - 80:80/tcp
       - 443:443/tcp

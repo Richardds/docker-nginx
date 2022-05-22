@@ -3,7 +3,7 @@
 #
 # Generates the Diffie-Hellman key agreement parameters
 #
-# Richard Boldiš <richard@boldis.dev
+# Author: Richard Boldiš <richard@boldis.dev>
 #
 
 DHPARAM_PATH=/etc/nginx/ssl/keys/dhparam.pem

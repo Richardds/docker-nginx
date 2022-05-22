@@ -3,7 +3,7 @@
 #
 # Generates fallback self-signed certificate
 #
-# Richard Boldiš <richard@boldis.dev
+# Author: Richard Boldiš <richard@boldis.dev>
 #
 
 CERTIFICATE_PATH=/etc/nginx/ssl/certs/default.pem
