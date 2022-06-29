@@ -1,6 +1,6 @@
 ARG NGINX_VERSION
 
-FROM nginx:${NGINX_VERSION}
+FROM nginx:${NGINX_VERSION}-alpine
 
 LABEL maintainer="Richard Boldiš <richard@boldis.dev>"
 

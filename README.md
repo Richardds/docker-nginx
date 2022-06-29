@@ -1,4 +1,4 @@
-# Nginx
+# Nginx for Docker
 
 Docker image for Nginx 1.20 (stable).
 
