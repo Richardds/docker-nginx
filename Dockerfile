@@ -2,7 +2,10 @@ ARG NGINX_VERSION
 
 FROM nginx:${NGINX_VERSION}-alpine
 
-LABEL maintainer="Richard Boldiš <richard@boldis.dev>"
+LABEL org.opencontainers.image.title 'Nginx'
+LABEL org.opencontainers.image.description 'Nginx with strict configuration and snippets'
+LABEL org.opencontainers.image.authors 'Richard Boldiš <richard@boldis.dev>'
+LABEL org.opencontainers.image.source https://github.com/Richardds/docker-nginx
 
 #
 # Packages
