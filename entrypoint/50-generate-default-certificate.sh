@@ -1,10 +1,13 @@
 #!/bin/sh
+# vim:sw=4:ts=4:et
 
 #
-# Generates fallback self-signed certificate
+# Generates default (fallback) self-signed certificate
 #
 # Author: Richard Boldiš <richard@boldis.dev>
 #
+
+set -e
 
 CERTIFICATE_PATH=/etc/nginx/ssl/certs/default.pem
 PRIVATEKEY_PATH=/etc/nginx/ssl/keys/default.pem
@@ -20,4 +23,6 @@ if [ ! -f "${CERTIFICATE_PATH}" ]; then
         -out "${CERTIFICATE_PATH}" \
         -days 3650 \
         -subj "/CN=${SUBJECT}"
+
+    chmod 0600 "${PRIVATEKEY_PATH}"
 fi
