@@ -2,6 +2,8 @@ ARG NGINX_VERSION
 
 FROM nginx:${NGINX_VERSION}-alpine
 
+WORKDIR /srv
+
 LABEL org.opencontainers.image.title 'Nginx'
 LABEL org.opencontainers.image.description 'Nginx with strict configuration and snippets'
 LABEL org.opencontainers.image.authors 'Richard Boldiš <richard@boldis.dev>'

@@ -8,6 +8,38 @@ Docker image for Nginx 1.20 (stable).
 - Generates `dhparam.pem` of size 2048
 - Generates fallback self-signed certificate used by fallback HTTPS server
 
+## Example
+
+```nginx
+server {
+    listen                  [::]:80 deferred;
+    listen                  80 deferred;
+
+    server_name             example.com;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen                  [::]:443 ssl http2;
+    listen                  443 ssl http2;
+
+    server_name             example.com;
+    root                    /srv;
+
+    include                 snippets/tls/enable.conf;
+    include                 snippets/tls/ocsp.conf;
+
+    ssl_certificate         ssl/certs/example.com.pem;
+    ssl_certificate_key     ssl/keys/example.com.pem;
+
+    location / {
+        index               index.html;
+        try_files           $uri =404;
+    }
+}
+```
+
 ## Snippets
 | Snippet                 | Description                                |
 | ----------------------- | ------------------------------------------ |
