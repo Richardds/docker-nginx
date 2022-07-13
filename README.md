@@ -1,6 +1,6 @@
 # Nginx for Docker
 
-Docker image for Nginx 1.20 (stable).
+Docker image for Nginx 1.22 (stable).
 
 - TLS 1.3 only
 - Handler for unknown domains

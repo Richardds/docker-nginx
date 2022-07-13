@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           build-args: |
-            NGINX_VERSION=1.20
+            NGINX_VERSION=1.22
           push: true
           tags: |
             richardboldis/nginx:latest
