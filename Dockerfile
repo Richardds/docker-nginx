@@ -38,9 +38,6 @@ COPY --chown=root:root ./config /etc/nginx
 # Entrypoints
 #
 
-# Remove automatic IPv6 script
-RUN rm -f /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
-
 # Add entrypoint scripts
 COPY --chown=root:root ./entrypoint /docker-entrypoint.d
 
