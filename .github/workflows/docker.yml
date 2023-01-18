@@ -8,6 +8,9 @@ on:
 jobs:
   docker:
     runs-on: ubuntu-latest
+    strategy:
+        matrix:
+          nginx_version: ['1.20', '1.21', '1.22', '1.23']
     steps:
       -
         name: Setup Docker
@@ -30,10 +33,10 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           build-args: |
-            NGINX_VERSION=1.22
+            NGINX_VERSION=${{ matrix.nginx_version }}
           push: true
           tags: |
             richardboldis/nginx:latest
-            richardboldis/nginx:${{ github.ref_name }}
+            richardboldis/nginx:${{ matrix.nginx_version }}-${{ github.ref_name }}
             ghcr.io/richardds/nginx:latest
-            ghcr.io/richardds/nginx:${{ github.ref_name }}
+            ghcr.io/richardds/nginx:${{ matrix.nginx_version }}-${{ github.ref_name }}
